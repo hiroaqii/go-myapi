@@ -1,8 +1,6 @@
 package repositories_test
 
 import (
-	"database/sql"
-	"fmt"
 	"testing"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -11,16 +9,6 @@ import (
 )
 
 func TestSelectArticleDetail(t *testing.T) {
-	dbUser := "docker"
-	dbPassword := "docker"
-	dbDatabase := "sampledb"
-	dbConn := fmt.Sprintf("%s:%s@tcp(127.0.0.1:3306)/%s?parseTime=true", dbUser, dbPassword, dbDatabase)
-
-	db, err := sql.Open("mysql", dbConn)
-	if err != nil {
-		t.Fatal(err)
-	}
-	defer db.Close()
 
 	tests := []struct {
 		testTitle string
@@ -49,7 +37,7 @@ func TestSelectArticleDetail(t *testing.T) {
 
 	for _, test := range tests {
 		t.Run(test.testTitle, func(t *testing.T) {
-			got, err := repositories.SelectArticleDetail(db, test.expected.ID)
+			got, err := repositories.SelectArticleDetail(testDB, test.expected.ID)
 			if err != nil {
 				t.Fatal(err)
 			}

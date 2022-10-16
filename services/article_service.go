@@ -1,6 +1,8 @@
 package services
 
 import (
+	"fmt"
+
 	"github.com/hiroaqii/go-myapi/models"
 	"github.com/hiroaqii/go-myapi/repositories"
 )
@@ -22,12 +24,14 @@ func PostArticleService(article models.Article) (models.Article, error) {
 func GetArticleListService(page int) ([]models.Article, error) {
 	db, err := connectDB()
 	if err != nil {
+		fmt.Println(err)
 		return nil, err
 	}
 	defer db.Close()
 
 	articleList, err := repositories.SelectArticleList(db, page)
 	if err != nil {
+		fmt.Println(err)
 		return nil, err
 	}
 

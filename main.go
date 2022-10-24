@@ -6,11 +6,8 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/hiroaqii/go-myapi/controllers"
-	"github.com/hiroaqii/go-myapi/routers"
-	"github.com/hiroaqii/go-myapi/services"
-
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/hiroaqii/go-myapi/api"
 )
 
 var (
@@ -26,9 +23,7 @@ func main() {
 		log.Println("fail to connect DB")
 		return
 	}
-	ser := services.NewMyAppService(db)
-	con := controllers.NewMyAppController(ser)
-	r := routers.NewRouter(con)
+	r := api.NewRouter(db)
 
 	log.Println("server start at port 8080")
 	log.Fatal(http.ListenAndServe(":8080", r))
